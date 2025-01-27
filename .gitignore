@@ -1,0 +1,17 @@
+# 忽略前端 node_modules
+frontend/node_modules/
+
+# 忽略后端 pycache
+backend/__pycache__/
+
+# 忽略 Docker 临时文件
+*.log
+*.pid
+*.swp
+
+# 忽略 Python 虚拟环境
+backend/venv/
+
+# 忽略 IDE 配置文件
+.vscode/
+.idea/
