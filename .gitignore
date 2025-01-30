@@ -16,4 +16,4 @@ backend/venv/
 
 # 忽略 IDE 配置文件
 .vscode/
-.idea/
+.idea/backend/epubrosetta/wordwise/test.db

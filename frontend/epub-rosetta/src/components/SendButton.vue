@@ -60,12 +60,6 @@ export default {
           console.log('上传成功',response);
           const data = await response.json();
           const file_url = data.file_url;
-          // 在页面上显示下载链接
-          // const downloadLink = document.createElement('a');
-          // downloadLink.href = file_url;
-          // downloadLink.download = 'result.epub';
-          // downloadLink.click();
-          // emit event to parent component
           EventBus.emit('send-success', file_url);
           console.log('file_url:', file_url);
           this.fileUrl = file_url;
