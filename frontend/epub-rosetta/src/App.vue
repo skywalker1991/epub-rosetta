@@ -6,7 +6,7 @@
   <Banner />
   <main>
     <div class = "uploader">
-      <EpubUploader @file-selected="handleFileSelect" />
+      <EpubUploader @file-selected="handleFileSelect"/>
     </div>
     <div class = "sidebar">
       <Settings @settings-change="handleSettingsChange" />
@@ -16,6 +16,7 @@
         :textFrequency="textFrequency"
         :useCorpusFrequency="useCorpusFrequency"
         :corpusFrequency="corpusFrequency"
+        @send-success="handleSendSuccess"
       />
     </div>
     
@@ -44,7 +45,8 @@ export default {
       useTextFrequency: false,
       textFrequency: 50,
       useCorpusFrequency: false,
-      corpusFrequency: 50
+      corpusFrequency: 50,
+      fileUrl: null
      
     };
   },
@@ -59,6 +61,11 @@ export default {
     handleFileSelect(file) {
       console.log('Selected file:', file);
       this.file = file;
+    },
+    handleSendSuccess(file_url) {
+      console.log('Send success:', file_url);
+      this.fileUrl = file_url;
+      
     }
   },
 

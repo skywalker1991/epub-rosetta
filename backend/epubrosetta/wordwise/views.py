@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import status
 from django.core.files.storage import default_storage
+from django.conf import settings
 import os
+from .epub import Epub
+import stat
 
 # Create your views here.
 class Wordwise(APIView):
@@ -12,22 +15,37 @@ class Wordwise(APIView):
 
     def post(self, request, *args, **kwargs):
         file = request.data['file']
-        file_name = default_storage.save(file.name, file)
-        file_url = default_storage.url(file_name)
-        print(file_url)
+
         text_frequency = request.data['textFrequency']
         corpus_frequency = request.data['corpusFrequency']
-        print(file_name, text_frequency, corpus_frequency)
+       
+        # 将上传的文件保存到media的uploads目录下
+        file_name = os.path.join('uploads', file.name)
+        file_name = default_storage.save(file_name, file)
 
-        static_dir = os.path.join('static','uploads')
-        if not os.path.exists(static_dir):
-            os.makedirs(static_dir)
-        static_file_path = os.path.join(static_dir, file_name)
-        with open(static_file_path, 'wb+') as destination:
-            for chunk in file.chunks():
-                destination.write(chunk)
+        book_settings = {
+            'word_show_threshold': int(text_frequency),
+            'word_frequency_threshold': int(corpus_frequency),
+            'class_name': 'wordwise',
+            'english_only': False
+        }
 
-        file_url = request.build_absolute_uri('/static/uploads/' + file_name)
+
+        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        # 读取media的uploads目录下的文件, 并处理
+        epub = Epub(file_path,book_settings)
+        output_filename = epub.process_epub()
+
+        # 处理好的文件的路径
+        temp_file = os.path.join(os.path.dirname(__file__), output_filename)
+
+        # 将处理好的文件保存到media的output目录下
+        out_book_name = os.path.join('output', output_filename)
+        default_storage.save(out_book_name, open(temp_file, 'rb'))
+        # 删除处理好的文件
+        os.remove(temp_file)
+
+        file_url = request.build_absolute_uri(settings.MEDIA_URL + out_book_name)
 
         return Response({'file_url': file_url}, status=status.HTTP_200_OK)
         

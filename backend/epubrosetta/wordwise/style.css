@@ -1,0 +1,15 @@
+/* 添加wordwise的样式 */
+
+/* 在单词上方添加虚线扁平箭头指向释义 */
+/* 确保 ruby 标签不改变左右间距 */
+
+
+
+.wordwise {
+    text-decoration: overline; /* 上划线 */
+    text-decoration-style: dotted; /* 设置为虚线 */
+}
+
+
+
+p {text-indent:1em;margin:0 0 0 0;line-height: 2;}

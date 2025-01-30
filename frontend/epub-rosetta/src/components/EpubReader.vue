@@ -10,11 +10,12 @@
 
 <script>
 import ePub from 'epubjs';
+import EventBus from '../event-bus';
 
 export default {
   props: {
     file: {
-      type: File,
+      type: [File, String],
       required: true
     }
   },
@@ -29,14 +30,18 @@ export default {
       immediate: true,
       handler(newFile) {
         if (newFile) {
-          this.loadEpub(newFile);
+          if (typeof newFile === 'string') {
+            this.loadEpubFromUrl(newFile);
+          } else {
+            this.loadEpubFromFile(newFile);
+          }
         }
       }
     }
   },
 
   methods: {
-    loadEpub(file) {
+    loadEpubFromFile(file) {
       if (this.book) {
         this.book.destroy();
         this.book = null;
@@ -54,6 +59,22 @@ export default {
         this.applyCustomCss();
       };
       reader.readAsArrayBuffer(file);
+    },
+    loadEpubFromUrl(url) {
+      if (this.book) {
+        this.book.destroy();
+        this.book = null;
+        this.rendition = null;
+      }
+      this.book = ePub(url);
+      this.rendition = this.book.renderTo(this.$refs.viewer, {
+        method: 'default',
+        width: '100%',
+        height: '100%'
+      });
+      this.book.ready.then(() => {
+        this.rendition.display();
+      });
     },
     applyCustomCss() {
         const style = `
@@ -79,6 +100,9 @@ export default {
         this.rendition.next();
       }
     }
+  },
+  beforeUnmount() {
+    EventBus.off('send-success', this.loadEpubFromUrl);
   }
 
 }

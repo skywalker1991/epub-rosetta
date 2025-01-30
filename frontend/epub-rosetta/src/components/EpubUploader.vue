@@ -17,7 +17,7 @@
     <button @click="selectFile">选择文件</button>
     
   </div>
-  <EpubReader v-if="file" :file="file" />
+  <EpubReader v-if="file" :file="file"/>
     </div>
 
 
@@ -26,6 +26,7 @@
 
 <script>
 import EpubReader from "./EpubReader.vue";
+import EventBus from '../event-bus';
 export default {
   components: {
     EpubReader,
@@ -38,6 +39,7 @@ export default {
   },
   mounted() {
     this.fileInput = this.$refs.fileInput;
+    EventBus.on('send-success', this.loadEpubFromUrl);
   },
   methods: {
     handleDrop(event) {
@@ -60,6 +62,9 @@ export default {
       this.file = file;
       this.$emit("file-selected", file);
       // 在这里处理文件上传逻辑
+    },
+    loadEpubFromUrl(url) {
+      this.file = url;
     },
   },
 };
