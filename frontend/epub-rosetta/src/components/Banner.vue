@@ -2,7 +2,7 @@
   <div class="banner">
     <div class="text-container">
       <h1 class="title">Epub-Rosetta</h1>
-      <p class="subtitle">流畅你的外语阅读体验</p>
+      <p class="subtitle">实现图书自动查词并标注</p>
     </div>
 \
 

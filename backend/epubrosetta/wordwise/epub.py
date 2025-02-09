@@ -7,7 +7,7 @@ from .stardict import StarDict, LemmaDB
 from .wordwise import Wordwise
 import os
 
-
+nltk.download('punkt_tab')
 # 创建Epub文件处理类
 
 class Epub:

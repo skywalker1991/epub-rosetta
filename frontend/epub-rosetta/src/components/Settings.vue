@@ -1,44 +1,5 @@
 <template>
   <div class="settings">
-    <div class="setting-table">
-      <table>
-        <thead>
-            <tr>
-                <th>四六级成绩</th>
-                <th>雅思成绩 (IELTS)</th>
-                <th>对应语料库词频范围</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>CET-4 425-530</td>
-                <td>雅思 4.5-5.0</td>
-                <td>高频词汇（常用词汇：前 1000 个单词）</td>
-            </tr>
-            <tr>
-                <td>CET-4 531-600</td>
-                <td>雅思 5.5-6.0</td>
-                <td>高频+中频词汇（1001-3000 个单词）</td>
-            </tr>
-            <tr>
-                <td>CET-6 425-530</td>
-                <td>雅思 5.0-5.5</td>
-                <td>高频+中频词汇（1001-3000 个单词）</td>
-            </tr>
-            <tr>
-                <td>CET-6 531-600</td>
-                <td>雅思 6.0-6.5</td>
-                <td>中频词汇（3001-5000 个单词）</td>
-            </tr>
-            <tr>
-                <td>CET-6 600+</td>
-                <td>雅思 6.5-7.0</td>
-                <td>中频+低频词汇（5001 以上）</td>
-            </tr>
-        </tbody>
-    </table>
-
-    </div>
     <div class="setting-item">
       <el-slider 
       v-model="corpusFrequency" 
@@ -56,7 +17,7 @@ export default {
   data() {
     return {
       useTextFrequency: false,
-      textFrequency: 5,
+      textFrequency: 10,
       useCorpusFrequency: false,
       corpusFrequency: 2000,
       marks: {
