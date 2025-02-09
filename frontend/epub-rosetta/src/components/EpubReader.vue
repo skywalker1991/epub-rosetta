@@ -1,9 +1,10 @@
 <template>
-  <div class="epub-reader">
+  <div v-if="isVisible" class="epub-reader">
     <div ref="viewer" class="viewer"></div>
     <div class="controls">
-      <button @click="prevPage">上一页</button>
-      <button @click="nextPage">下一页</button>
+      <button class="btn" @click="prevPage">上一页</button>
+      <button class="btn" @click="nextPage">下一页</button>
+      <button class="btnred" @click="close">关闭</button>
     </div>
   </div>
 </template>
@@ -22,7 +23,8 @@ export default {
   data() {
     return {
       book: null,
-      rendition: null
+      rendition: null,
+      isVisible: true
     }
   },
   watch: {
@@ -56,6 +58,7 @@ export default {
           height: '100%'
         });
         this.rendition.display();
+        EventBus.emit('new-reader');
         this.applyCustomCss();
       };
       reader.readAsArrayBuffer(file);
@@ -99,6 +102,15 @@ export default {
       if (this.rendition) {
         this.rendition.next();
       }
+    },
+    close() {
+      if (this.book) {
+        this.book.destroy();
+        this.book = null;
+        this.rendition = null;
+      }
+      this.$emit('close');
+      EventBus.emit('close-reader');
     }
   },
   beforeUnmount() {
@@ -114,6 +126,9 @@ export default {
   height: 900px;
   overflow: hidden;
   position: relative;
+  background-color: #ffffff;
+  border: 1px solid #d1d5da;
+  border-radius: 6px;
 }
 .viewer {
   width: 100%;
@@ -127,9 +142,16 @@ export default {
   display: flex;
   gap: 10px;
 }
-button {
+.btn {
   padding: 10px 20px;
-  font-size: 10px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #0366d6;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+}
+.btn:hover {
+  background-color: #005cc5;
 }
 </style>

@@ -1,27 +1,25 @@
-
-
 <template>
   <div class="container">
-
-  <Banner />
-  <main>
-    <div class = "uploader">
-      <EpubUploader @file-selected="handleFileSelect"/>
-    </div>
-    <div class = "sidebar">
-      <Settings @settings-change="handleSettingsChange" />
-      <SendButton
-        :file="file"
-        :useTextFrequency="useTextFrequency"
-        :textFrequency="textFrequency"
-        :useCorpusFrequency="useCorpusFrequency"
-        :corpusFrequency="corpusFrequency"
-        @send-success="handleSendSuccess"
-      />
-    </div>
-    
-
-  </main>
+    <Banner />
+    <main>
+      <div class="uploader">
+        <EpubUploader @file-selected="handleFileSelect"/>
+      </div>
+      <div class="sidebar">
+        <Settings @settings-change="handleSettingsChange" />
+        <SendButton
+          :file="file"
+          :useTextFrequency="useTextFrequency"
+          :textFrequency="textFrequency"
+          :useCorpusFrequency="useCorpusFrequency"
+          :corpusFrequency="corpusFrequency"
+          @send-success="handleSendSuccess"
+        />
+      </div>
+    </main>
+    <footer>
+      <p>© 2025 Epub-Rosetta</p>
+    </footer>
   </div>
 </template>
 
@@ -50,6 +48,9 @@ export default {
      
     };
   },
+  mounted() {
+    document.title = 'Epub-Rosetta';
+  },
   methods: {
     handleSettingsChange(settings) {
       console.log('Settings changed:', settings);
@@ -76,15 +77,17 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
 }
 /* header和main上下排列*/
 main {
-  justify-content: center;
   width: 100%;
   display: flex;
   padding-top: 200px;
-  align-items: center;
+  align-items: flex-start;
+  margin: 0 auto;
 
 }
 
@@ -93,11 +96,12 @@ main {
   width: 700px;
   height: 900px;
   display: flex;
-  border: 2px dashed #ccc;
-  border-radius: 8px;
+  border: 3px dashed #d1d5da;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   padding: 5px;
+  background-color: #eae6e6;
 }
 
 .logo {
@@ -107,6 +111,7 @@ main {
 
 .sidebar {
   display: flex;
+  
   flex-direction: column;
   /* 内部元素垂直且靠近上方 */
   margin-left: 10px;

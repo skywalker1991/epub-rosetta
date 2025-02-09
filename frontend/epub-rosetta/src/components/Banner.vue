@@ -1,7 +1,11 @@
 <template>
   <div class="banner">
-    <h1 class="title">EPUB-Rosetta</h1>
-    <p class="subtitle">将原版EPUB更加容易阅读</p>
+    <div class="text-container">
+      <h1 class="title">Epub-Rosetta</h1>
+      <p class="subtitle">流畅你的外语阅读体验</p>
+    </div>
+\
+
   </div>
 </template>
 
@@ -13,22 +17,31 @@ export default {
 
 <style scoped>
 .banner {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  text-align: center;
+  text-align: left;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: #0f6fd0;
   z-index: 1000;
+  justify-content: space-between;
 }
 
 .title {
-  font-size: 2.5em;
+  font-size: 3.5em;
   margin: 20px 0 10px;
+  color: #fafafa;
+  font-weight: bold;
+  margin-left: 150px;
 }
 .subtitle {
-  font-size: 1.2em;
-  color: #666;
+  margin-top: -10px;
+  font-size: 2.0em;
+  color: #e5e2e2;
+  margin-left: 150px;
 }
+
+
 </style>

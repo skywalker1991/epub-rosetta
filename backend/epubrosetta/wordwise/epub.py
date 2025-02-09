@@ -34,7 +34,7 @@ class Epub:
         text = ''
         for root, dirs, files in os.walk(self.output_contents_dir):
             for file in files:
-                if file.endswith(".xhtml"):
+                if file.endswith(".xhtml") or file.endswith(".html") or file.endswith(".xml"):
                     file_path = os.path.join(root, file)
                     with open(file_path, "r", encoding="utf-8") as f:
                         html_content = f.read()
@@ -112,7 +112,8 @@ class Epub:
         for root, dirs, files in os.walk(self.output_contents_dir):
             cached_dict = {}
             for file in files:
-                if file.endswith(".xhtml"):
+                # 文件后缀可能为xhtml或者html或xml
+                if file.endswith(".xhtml") or file.endswith(".html") or file.endswith(".xml"):
                     file_path = os.path.join(root, file)
                     with open(file_path, "r", encoding="utf-8") as f:
                         html_content = f.read()
