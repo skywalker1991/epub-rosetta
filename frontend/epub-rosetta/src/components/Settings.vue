@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       useTextFrequency: false,
-      textFrequency: 10,
+      textFrequency: 30,
       useCorpusFrequency: false,
       corpusFrequency: 2000,
       marks: {
